@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,12 +18,17 @@ void main() async {
   const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
   const iosSettings = DarwinInitializationSettings();
 
-  const settings = InitializationSettings(
-    android: androidSettings,
-    iOS: iosSettings,
-  );
+  const macosSettings = DarwinInitializationSettings();
 
+const settings = InitializationSettings(
+  android: androidSettings,
+  iOS: iosSettings,
+  macOS: macosSettings,
+);
+
+  if (defaultTargetPlatform != TargetPlatform.macOS) {
   await notificationsPlugin.initialize(settings);
+}
 
   runApp(const BorcKocuApp());
 }
